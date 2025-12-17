@@ -1,0 +1,13 @@
+from .base import *
+
+DEBUG = False
+
+SECRET_KEY = 'SUPER-TAJNY-KLUCZ-Z-ENV'
+
+ALLOWED_HOSTS = ['twojadomena.pl']
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
