@@ -5,9 +5,31 @@
 {% block content %}
   <h1>Dashboard</h1>
   <p>
-    {% comment %} Welcome to your dashboard. You can <a href="{% url "edit" %}">edit your profile</a> or <a href="{% url "password_change" %}">change your password</a>. {% endcomment %}
     WELCOME TO THE PANEL
     <br>
     HERE YOU CAN <a href="{% url 'edit' %}">edit your profile</a> OR <a href="{% url 'password_change' %}">change your password</a>
   </p>
+
+  <h2>Your sets</h2>
+
+{% if sets %}
+  <div id="sets-container">
+    <ul class="sets-grid">
+      {% for set in sets %}
+        <li class="set-card">
+          <div class="set-content">
+            <h3 class="set-title">{{ set.name }}</h3>
+            <p class="set-description">{{ set.description|default:"No description" }}</p>
+            <div class="set-footer">
+              <span class="card-count">{{ set.cards_count }} cards</span>
+              <small class="set-date">{{ set.created_at|date:"d M Y" }}</small>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% else %}
+  <p class="empty-state">You don't have any sets yet.</p>
+{% endif %}
 {% endblock %}

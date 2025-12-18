@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Profile
+from sets.models import Set, Card
 from .forms import (
     UserRegistrationForm,
     UserEditForm,
@@ -10,10 +11,16 @@ from .forms import (
 
 @login_required
 def dashboard(request):
+    
+    sets = Set.objects.filter(owner=request.user)
+
     return render(
         request,
         'account/dashboard.html',
-        {'section': 'dashboard'}
+        {
+            'section': 'dashboard',
+            'sets': sets
+        }
     )
 
 def register(request):
