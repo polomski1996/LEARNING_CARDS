@@ -1,0 +1,26 @@
+{% load static %}
+<head>
+  <link href="{% static "styles/sets_styles.css" %}" rel="stylesheet">
+</head>
+
+
+{% if sets %}
+  <div id="sets-container">
+    <ul class="sets-grid">
+      {% for set in sets %}
+        <li class="set-card">
+          <div class="set-content">
+            <h3 class="set-title">{{ set.name }}</h3>
+            <p class="set-description">{{ set.description|default:"No description" }}</p>
+            <div class="set-footer">
+              <span class="card-count">{{ set.cards_count }} cards</span>
+              <small class="set-date">{{ set.created_at|date:"d M Y" }}</small>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% else %}
+  <p class="empty-state">You don't have any sets yet.</p>
+{% endif %}
