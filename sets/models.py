@@ -14,6 +14,7 @@ class Set(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.CharField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    sessions_count = models.PositiveIntegerField(default=0, editable=False)
 
     @property
     def cards_count(self):
@@ -33,6 +34,7 @@ class Card(models.Model):
     answer = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     card_nr = models.PositiveIntegerField(default=1, editable=False)
+    mastered_lvl = models.PositiveSmallIntegerField(default=0)
 
     #automatic sort by  card_nr
     class Meta:

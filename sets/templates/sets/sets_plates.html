@@ -11,6 +11,11 @@
         <li class="set-card">
           <div class="set-content">
             <h3 class="set-title">{{ set.name }}</h3>
+            {% comment %} LINK TO START SESSION {% endcomment %}
+            <a href="{% url 'learn_sessions:start' set.id %}">
+              Start learning
+            </a>
+
             <p class="set-description">{{ set.description|default:"No description" }}</p>
             <div class="set-footer">
               <span class="card-count">{{ set.cards_count }} cards</span>

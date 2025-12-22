@@ -1,0 +1,26 @@
+{% load static %}
+
+<head>
+  <link href="{% static 'learning_sessions/css/session.css' %}" rel="stylesheet">
+</head>
+
+{% if cards %}
+  <div id="cards-container">
+    <ul class="cards-grid">
+      {% for card in cards %}
+        <li class="card">
+          <div class="card-inner">
+            <div class="card-front">
+              {{ card.question }}
+            </div>
+            <div class="card-back">
+              {{ card.answer }}
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% else %}
+  <p class="empty-state">No cards in this set.</p>
+{% endif %}
