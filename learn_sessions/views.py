@@ -15,7 +15,7 @@ def start_session(request, set_id):
         set=set_obj
     )
 
-    return redirect('learn_session:session', session.id)
+    return redirect('learn_sessions:session', session.id)
 
 def learn_session_view(request, session_id):
     session = get_object_or_404(
@@ -26,7 +26,7 @@ def learn_session_view(request, session_id):
 
     cards = session.set.cards.all()
 
-    return render(request, 'learning_sessions/learn_session.html', {
-        'session', session,
-        'cards', cards,
+    return render(request, 'learn_sessions/learn_session.html', {
+        'session': session,
+        'cards': cards,
     })
