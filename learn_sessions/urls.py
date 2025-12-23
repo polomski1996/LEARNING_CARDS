@@ -12,6 +12,11 @@ urlpatterns = [
     path(
         'session/<int:session_id>/',
         views.learn_session_view,
-        name='session'
+        name='session',
+    ),
+    path(
+        'api/rate-card/',
+        views.rate_card,
+        name='rate_card',
     )
 ]

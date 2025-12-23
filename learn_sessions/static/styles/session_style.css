@@ -1,142 +1,115 @@
-/* styles.css - Minimalistic dark theme for flash-card grid */
-
 :root {
---bg: #0e0f12;
---bg-soft: #141821;
---card: #1f2128;
---card-alt: #272932;
---text: #e8eaf6;
---muted: #a6adba;
---accent: #4e8cff;
---shadow: 0 8px 20px rgba(0,0,0,0.35);
---radius: 12px;
---gap: 20px;
+  --bg: #0e0f12;
+  --card: #1f2128;
+  --card-alt: #272932;
+  --text: #e8eaf6;
+  --muted: #a6adba;
+  --accent: #4e8cff;
+  --shadow: 0 8px 20px rgba(0,0,0,0.35);
+  --radius: 12px;
+  --gap: 20px;
 }
 
-{ box-sizing: border-box; }
+/* reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 html, body {
-height: 100%;
-background: linear-gradient(180deg, #0b0e13 0%, #12161d 60%, #0b0e13 100%);
-color: var(--text);
-font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-margin: 0;
+  margin: 0;
+  min-height: 100%;
+  background: linear-gradient(180deg, #0b0e13, #12161d);
+  color: var(--text);
+  font-family: Inter, system-ui, sans-serif;
 }
 
+/* layout */
 #cards-container {
-padding: 24px;
-max-width: 1200px;
-margin: 0 auto;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
 }
 
 .cards-grid {
-list-style: none;
-padding: 0;
-margin: 0;
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: var(--gap);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--gap);
 }
 
+/* card */
 .card {
-perspective: 1000px;
-display: block;
-width: 100%;
+  perspective: 1000px;
 }
 
 .card-inner {
-position: relative;
-height: 100%;
-min-height: 240px;
-padding: 20px;
-border-radius: var(--radius);
-background: linear-gradient(135deg, var(--card) 0%, var(--card-alt) 100%);
-box-shadow: var(--shadow);
-transition: transform 0.4s cubic-bezier(.2,.8,.2,1);
-transform-style: preserve-3d;
-overflow: hidden;
-border: 1px solid rgba(255,255,255,0.05);
+  position: relative;
+  min-height: 220px;
+  padding: 20px;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--card), var(--card-alt));
+  box-shadow: var(--shadow);
+  transform-style: preserve-3d;
+  transition: transform 0.45s ease;
+  cursor: pointer;
 }
 
-.card-front, .card-back {
-position: absolute;
-inset: 0;
-backface-visibility: hidden;
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 12px;
-text-align: center;
-gap: 8px;
+/* flip */
+.card-inner.flipped {
+  transform: rotateY(180deg);
 }
 
-.card-front {
-z-index: 2;
-transform: rotateY(0deg);
+/* faces */
+.card-front,
+.card-back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  backface-visibility: hidden;
+  text-align: center;
 }
 
 .card-back {
-transform: rotateY(180deg);
-color: var(--muted);
-padding: 16px;
-text-align: left;
+  transform: rotateY(180deg);
+  flex-direction: column;
+  gap: 12px;
+  color: var(--muted);
 }
 
-.card-inner:hover {
-transform: rotateY(0.5deg);
+/* rating */
+.rating {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.card:hover .card-inner {
-transform: translateY(-2px);
+.rate-btn {
+  background: transparent;
+  border: 1px solid rgba(90, 245, 0, 0.975);
+  color: var(--muted);
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
 }
 
-.empty-state {
-text-align: center;
-color: var(--muted);
-padding: 40px 0;
+.rate-btn:hover {
+  background: var(--accent);
+  color: #fff;
 }
 
-/* Image handling inside cards (optional) */
-.card-front img, .card-back img {
-max-width: 100%;
-max-height: 60vh;
-object-fit: contain;
-display: block;
-margin: 0 auto;
-border-radius: 8px;
-}
-
-/* Responsive grid behavior */
-@media (max-width: 1024px) {
-.cards-grid {
-grid-template-columns: repeat(2, 1fr);
-}
-}
-
-@media (max-width: 640px) {
-.cards-grid {
-grid-template-columns: 1fr;
-}
-
-.card-inner {
-min-height: 180px;
-padding: 16px;
-}
-
-.card-back {
-font-size: 0.95rem;
-}
-}
-
-/* Optional: ensure cards look good on tall phones */
-@media (min-height: 800px) {
-.card-inner {
-min-height: 280px;
-}
-}
-
-/* Small helper for accessibility: focus outlines */
-.card-inner:focus-visible {
-outline: 2px solid var(--accent);
-outline-offset: 2px;
+/* responsive */
+@media (max-width: 600px) {
+  .card-inner {
+    min-height: 180px;
+    padding: 14px;
+  }
 }

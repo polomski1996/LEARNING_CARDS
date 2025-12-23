@@ -9,5 +9,5 @@ class SetAdmin(admin.ModelAdmin):
 
 @admin.register(Card)
 class CardAdmin(admin.ModelAdmin):
-    list_display = ['set', 'question', 'answer', 'card_nr']
+    list_display = ['set', 'question', 'answer', 'card_nr', 'mastered_lvl']
     raw_id_fields = ['set']

@@ -1,27 +1,43 @@
 {% load static %}
 
+<!DOCTYPE html>
+<html lang="pl">
 <head>
-  <link href="{% static "styles/session_style.css" %}" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Learning session</title>
 
+  <link href="{% static 'styles/session_style.css' %}" rel="stylesheet">
 </head>
+<body>
 
-{% if cards %}
   <div id="cards-container">
     <ul class="cards-grid">
       {% for card in cards %}
-        <li class="card">
+        <li class="card" data-card-id="{{ card.id }}">
           <div class="card-inner">
             <div class="card-front">
               {{ card.question }}
             </div>
+
             <div class="card-back">
               {{ card.answer }}
+
+              <div class="rating">
+                {% for i in "12345678910" %}
+                  <button class="rate-btn" data-level="{{ forloop.counter }}">
+                    {{ forloop.counter }}
+                  </button>
+                {% endfor %}
+              </div>
             </div>
           </div>
         </li>
       {% endfor %}
     </ul>
   </div>
-{% else %}
-  <p class="empty-state">No cards in this set.</p>
-{% endif %}
+
+  {% csrf_token %}
+  <script type="module" src="{% static 'main.js' %}"></script>
+
+</body>
+</html>
