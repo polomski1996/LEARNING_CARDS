@@ -10,6 +10,13 @@ export class LearnSession {
         });
     }
 
+    refresh_rating(card_id) {
+        this.cards.forEach(card => {
+            const level = 
+            document.querySelector('.mastered_lvl').innerHTML = '<p><h2>' + level + '</h2></p>';
+        })
+    }
+
     bindCardFlip(card) {
         const inner = card.querySelector('.card-inner');
 
@@ -57,6 +64,16 @@ export class LearnSession {
             }
         } catch (err) {
             console.error(err);
+        }
+        
+        // Update card master_lvl on front, find card by data-card-id
+        const cardElement = document.querySelector(`.card[data-card-id="${cardId}"]`);
+        
+        if (cardElement) {
+            cardElement.querySelector('.mastered_lvl').innerHTML = `<h2>${level}</h2>`;
+            console.log('Updated card', cardId, 'to level', level);
+        } else {
+            console.error('Card element not found for ID:', cardId);
         }
     }
 
