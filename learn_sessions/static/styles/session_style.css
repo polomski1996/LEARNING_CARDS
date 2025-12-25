@@ -6,6 +6,7 @@
   --text: #e8eaf6;
   --muted: #a6adba;
   --accent: #4e5c75;
+  --border: rgba(0, 71, 138, 0.6);
   --shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
   --radius: 12px;
   --gap: 20px;
@@ -63,6 +64,9 @@ body {
   flex-shrink: 0;
   scroll-snap-align: center;
   scroll-snap-stop: always;
+  border-radius: var(--radius);
+  /* transform-style: preserve-3d; */
+  contain: layout paint;
 }
 
 .card-inner {
@@ -77,6 +81,8 @@ body {
   transform-style: preserve-3d;
   transition: transform 0.45s ease;
   cursor: pointer;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
 }
 
 /* flip */
@@ -113,7 +119,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid rgba(0, 120, 232, 0.6);
+  border: 2px solid var(--border);
 }
 
 .card-inner .card-front .mastered_lvl h2{
