@@ -1,0 +1,8 @@
+<form method="post">
+    {% csrf_token %}
+
+    <input type="text" name="question" placeholder="question" required>
+    <textarea name="answer" placeholder="answer"></textarea>
+    
+    <button type="submit">Create Card</button>
+</form>

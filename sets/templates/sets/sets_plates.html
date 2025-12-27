@@ -17,6 +17,18 @@
             </a>
 
             <p class="set-description">{{ set.description|default:"No description" }}</p>
+            <div class="delete_set">
+              <form method="post" action="{% url 'sets:delete' set.id %}">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+              </form>
+            </div>
+            <div class="create_card">
+              <form method="post" action="{% url 'sets:create' set.id %}">
+                {% csrf_token %}
+                <button type="submit">Create Card</button>
+              </form>
+            </div>
             <div class="set-footer">
               <span class="card-count">{{ set.cards_count }} cards</span>
               <small class="set-date">{{ set.created_at|date:"d M Y" }}</small>
