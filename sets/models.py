@@ -30,8 +30,20 @@ class Card(models.Model):
         on_delete=models.CASCADE,
         related_name='cards'
     )
-    question = models.TextField()
-    answer = models.TextField()
+    question = models.TextField(blank=True)
+    question_image = models.ImageField(
+        upload_to='cards/questions/',
+        blank=True,
+        null=True
+    )
+    answer = models.TextField(blank=True)
+    answer_image = models.ImageField(
+        upload_to='cards/answers/',
+        blank=True,
+        null=True
+    )
+
+
     created_at = models.DateTimeField(auto_now_add=True)
     card_nr = models.PositiveIntegerField(default=1, editable=False)
     mastered_lvl = models.PositiveSmallIntegerField(default=0)

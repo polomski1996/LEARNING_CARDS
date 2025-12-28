@@ -12,4 +12,23 @@ class SetForm(forms.ModelForm):
 class CardForm(forms.ModelForm):
     class Meta:
         model = Card
-        fields = ['question', 'answer']
+        fields = ['question', 'question_image', 'answer', 'answer_image']
+
+    def clean(self):
+        cleaned = super().clean()
+
+        if not (
+            cleaned.get('question') or cleaned.get('question_image')
+        ):
+            raise forms.ValidationError(
+                "Question must have text or image"
+            )
+
+        if not (
+            cleaned.get('answer') or cleaned.get('answer_image')
+        ):
+            raise forms.ValidationError(
+                "Answer must have text or image"
+            )
+
+        return cleaned

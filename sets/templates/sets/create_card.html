@@ -1,8 +1,15 @@
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
-    <input type="text" name="question" placeholder="question" required>
-    <textarea name="answer" placeholder="answer"></textarea>
+    <div class="errors">
+        {{ form.non_field_errors }}
+    </div>
+
+    <textarea name="question"></textarea>
+    <input type="file" name="question_image" accept="image/*">
+
+    <textarea name="answer"></textarea>
+    <input type="file" name="answer_image" accept="image/*">
     
     <button type="submit">Create Card</button>
 </form>

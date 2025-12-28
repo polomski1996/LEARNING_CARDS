@@ -16,14 +16,29 @@
         <li class="card" data-card-id="{{ card.id }}">
           <div class="card-inner">
             <div class="card-front">
-              {{ card.question }}
+              <div class="card_question">
+                {{ card.question }}
+              </div>
+              {% if card.question_image %}
+                <div class="card_question_image">
+                  <img src="{{ card.question_image.url }}" alt="Question image here">
+                </div>
+              {% endif %}
+
               <div class="mastered_lvl">
                 <h2>{{ card.mastered_lvl }}</h2>
               </div>
             </div>
 
             <div class="card-back">
-              {{ card.answer }}
+              <div class="card_answer">
+                {{ card.answer }}
+              </div>
+              {% if card.answer_image %}
+                <div class="card_answer_image">
+                  <img src="{{ card.answer_image.url }}" alt="Answer image here">
+                </div>
+              {% endif %}
 
               <div class="rating">
                 {% for i in "1234567890" %}

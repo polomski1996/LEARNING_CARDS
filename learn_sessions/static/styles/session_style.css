@@ -105,7 +105,9 @@ body {
   word-break: break-all;
   overflow-wrap: anywhere;
 }
-
+.card-front{
+  flex-direction: column;
+}
 .card-inner .card-front .mastered_lvl {
   position: fixed;
   width: 58px;
@@ -145,6 +147,27 @@ body {
   align-items: center;
   justify-content: center;
   overflow-y: auto;
+}
+/* Kontenery obrazków */
+.card-inner .card-front .card_question_image,
+.card-inner .card-back .card_answer_image {
+  flex: 1;            /* Zajmij całą dostępną przestrzeń */
+  width: 100%;        /* Szerokość kontenera */
+  height: 100%;       /* Wysokość kontenera */
+  min-height: 0;      /* Ważne: pozwala flex-boxowi zmniejszyć element poniżej rozmiaru treści */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;   /* Zabezpieczenie przed wyciekiem */
+}
+
+/* Styl dla samego elementu img wewnątrz tych kontenerów */
+.card_question_image img,
+.card_answer_image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Kluczowe: obrazek będzie skalowany tak, by cały był widoczny */
+  display: block;
 }
 
 /* Rating section - larger touch targets, positioned at bottom */

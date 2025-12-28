@@ -19,7 +19,7 @@ def create_set(request):
 
     return render(request, 'sets/create_set.html', {'form': form})
 
-login_required
+@login_required
 def create_card(request, set_id):
     set_to_modify = get_object_or_404(
                 Set,
@@ -28,14 +28,14 @@ def create_card(request, set_id):
             )
     
     if request.method == 'POST':
-        form = CardForm(request.POST)
+        form = CardForm(request.POST, request.FILES)
         if form.is_valid():
             card = form.save(commit=False)
             card.set = set_to_modify
             card.save()
             return redirect('/account/')
-        else:
-            form = CardForm()
+    else:
+        form = CardForm()
 
     return render(
         request,
