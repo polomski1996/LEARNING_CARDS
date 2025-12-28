@@ -18,7 +18,9 @@
 
             <p class="set-description">{{ set.description|default:"No description" }}</p>
             <div class="delete_set">
-              <form method="post" action="{% url 'sets:delete' set.id %}">
+              <form method="post"
+                  action="{% url 'sets:delete' set.id %}"
+                  onsubmit="return confirm('Are you sure you want to permanently remove the {{ set.name }} set?');">
                 {% csrf_token %}
                 <button type="submit">Delete</button>
               </form>
