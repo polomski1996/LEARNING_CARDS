@@ -3,8 +3,8 @@
   <link href="{% static "styles/sets_styles.css" %}" rel="stylesheet">
 </head>
 
-
-{% if sets %}
+{% block content %}
+  {% if sets %}
   <div id="sets-container">
     <ul class="sets-grid">
       {% for set in sets %}
@@ -43,3 +43,4 @@
 {% else %}
   <p class="empty-state">You don't have any sets yet.</p>
 {% endif %}
+{% endblock content %}

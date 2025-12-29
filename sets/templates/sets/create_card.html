@@ -1,15 +1,19 @@
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
+{% extends 'base.html' %}
 
-    <div class="errors">
-        {{ form.non_field_errors }}
-    </div>
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
 
-    <textarea name="question"></textarea>
-    <input type="file" name="question_image" accept="image/*">
+        <div class="errors">
+            {{ form.non_field_errors }}
+        </div>
 
-    <textarea name="answer"></textarea>
-    <input type="file" name="answer_image" accept="image/*">
-    
-    <button type="submit">Create Card</button>
-</form>
+        <textarea name="question"></textarea>
+        <input type="file" name="question_image" accept="image/*">
+
+        <textarea name="answer"></textarea>
+        <input type="file" name="answer_image" accept="image/*">
+        
+        <button type="submit">Create Card</button>
+    </form>
+{% endblock content %}

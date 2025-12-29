@@ -1,41 +1,117 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>{% block title %}{% endblock %}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}FlipIT{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
   <link href="{% static "css/base.css" %}" rel="stylesheet">
 </head>
 <body>
-  <div id="header">
-    <span class="logo">Bookmarks</span>
-    {% if request.user.is_authenticated %}
-      <ul class="menu">
-        <li {% if section == "dashboard" %}class="selected"{% endif %}>
-          <a href="{% url "dashboard" %}">My dashboard</a>
-        </li>
-        <li {% if section == "images" %}class="selected"{% endif %}>
-          <a href="#">Images</a>
-        </li>
-        <li {% if section == "people" %}class="selected"{% endif %}>
-          <a href="#">People</a>
-        </li>
-      </ul>
-    {% endif %}
-    <span class="user">
+  <header id="header" class="header">
+    <div class="header-container">
+      <a href="/" class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">FlipIT</span>
+      </a>
+      
       {% if request.user.is_authenticated %}
-        Hello {{ request.user.first_name|default:request.user.username }},
-        <form action="{% url "logout" %}" method="post">
-          <button type="submit">Logout</button>
-          {% csrf_token %}
-        </form>
-      {% else %}
-        <a href="{% url "login" %}">Log-in</a>
+        <nav class="menu" id="mainNav">
+          <ul class="menu-list">
+            <li class="menu-item">
+              <a href="{% url "dashboard" %}" class="menu-link">
+                <span class="menu-icon">📊</span>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="menu-item {% if section == "account" %}selected{% endif %}">
+              <button class="menu-link dropdown-trigger" data-dropdown="accountDropdown" type="button">
+                <span class="menu-icon">👤</span>
+                <span>Account</span>
+                <span class="dropdown-arrow">▾</span>
+              </button>
+              <div class="dropdown-menu" id="accountDropdown">
+                <a href="{% url 'edit' %}" class="dropdown-item">
+                  <span class="dropdown-icon">✏️</span>
+                  <span>Edit Profile</span>
+                </a>
+                <a href="{% url 'password_change' %}" class="dropdown-item">
+                  <span class="dropdown-icon">🔒</span>
+                  <span>Change Password</span>
+                </a>
+              </div>
+            </li>
+            <li class="menu-item">
+              <a href="{% url 'sets:set_create' %}" class="menu-link btn-primary">
+                <span class="menu-icon">➕</span>
+                <span>Create Set</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="Toggle menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
       {% endif %}
-    </span>
-  </div>
-  <div id="content">
+
+      <div class="user-section">
+        {% if request.user.is_authenticated %}
+          <span class="user-greeting">
+            Hello, <strong>{{ request.user.first_name|default:request.user.username }}</strong>
+          </span>
+          <form action="{% url "logout" %}" method="post" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="btn-logout">
+              <span class="logout-icon">🚪</span>
+              <span>Logout</span>
+            </button>
+          </form>
+        {% else %}
+          <a href="{% url "login" %}" class="btn-login">Log in</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  {% if messages %}
+    <div class="messages-container">
+      <ul class="messages" id="messagesList">
+        {% for message in messages %}
+          <li class="message message-{{ message.tags }}" data-message-id="{{ forloop.counter }}">
+            <span class="message-icon">
+              {% if message.tags == 'success' %}✓{% elif message.tags == 'error' %}✗{% elif message.tags == 'warning' %}⚠{% else %}ℹ{% endif %}
+            </span>
+            <span class="message-text">{{ message }}</span>
+            <button class="message-close" type="button" aria-label="Close message">×</button>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <main id="content" class="content">
     {% block content %}
     {% endblock %}
-  </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p class="footer-text">&copy; 2025 FlipIT. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { AccountModule } from "{% static 'js/account.js' %}";
+    
+    // Initialize the account module
+    const accountModule = new AccountModule();
+    accountModule.init();
+  </script>
 </body>
 </html>

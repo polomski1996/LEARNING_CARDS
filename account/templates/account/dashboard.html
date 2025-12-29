@@ -4,18 +4,9 @@
 
 {% block content %}
   <h1>Dashboard</h1>
-  <p>
-    WELCOME TO THE PANEL
-    <br>
-    HERE YOU CAN <a href="{% url 'edit' %}">edit your profile</a> OR <a href="{% url 'password_change' %}">change your password</a>
-    CREATE A SET <a href="{% url 'sets:set_create' %}"> HERE </a>
-    <br>
-  </p>
 
   <h2>Your sets</h2>
-  {% comment %} Here, should be displayed all elements with or without functionalities on dashboard {% endcomment %}
-  
-  {% comment %} include sets plates grid {% endcomment %}
+
   {% include 'sets/sets_plates.html' %}
 
 {% endblock %}

@@ -1,8 +1,11 @@
-<form method="post">
-    {% csrf_token %}
+{% extends 'base.html' %}
 
-    <input type="text" name="name" placeholder="Set name" required>
-    <textarea name="description" placeholder="Description"></textarea>
-    
-    <button type="submit">Create Set</button>
-</form>
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Set name" required>
+        <textarea name="description" placeholder="Description"></textarea>
+        
+        <button type="submit">Create Set</button>
+    </form>
+{% endblock content %}
