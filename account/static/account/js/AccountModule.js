@@ -128,7 +128,6 @@ export class AccountModule {
    */
   closeAllDropdowns() {
     document.querySelectorAll(".dropdown-menu.active").forEach((dropdown) => {
-      console.log('dropdown closed');
       dropdown.classList.remove("active");
     })
 

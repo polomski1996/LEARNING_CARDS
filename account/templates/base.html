@@ -13,7 +13,7 @@
 <body>
   <header id="header" class="header">
     <div class="header-container">
-      <a href="/" class="logo">
+      <a href="{% url 'dashboard' %}" class="logo">
         <span class="logo-icon">⚡</span>
         <span class="logo-text">FlipIT</span>
       </a>
@@ -107,7 +107,7 @@
   </footer>
 
   <script type="module">
-    import { AccountModule } from "{% static 'account/js/AccountModule.js' %}";
+    import { AccountModule } from "{% static '/account/js/AccountModule.js' %}";
     
     // Initialize the account module
     const accountModule = new AccountModule();
