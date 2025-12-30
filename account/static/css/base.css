@@ -359,6 +359,15 @@ a:hover {
   font-weight: 600;
 }
 
+.form-container {
+  max-width: 400px;
+  margin: auto;
+  min-height: 100vh;
+  align-items: center;
+  text-align: center;
+}
+
+
 .logout-form {
   display: inline-flex;
 }
