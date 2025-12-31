@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% comment %} {% extends 'base.html' %} {% endcomment %}
 {% load static %}
 
 {% block content %}
@@ -11,7 +11,11 @@
   <link href="{% static 'learn_sessions/styles/session_style.css' %}" rel="stylesheet">
 </head>
 <body>
-
+  <div class="finish_session-container">
+    <button id="finish_session" type="button">
+      <p>Finish Session</p>
+    </button>
+  </div>
   <div id="cards-container">
     <ul class="cards-grid">
       {% for card in cards %}

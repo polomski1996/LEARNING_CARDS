@@ -7,6 +7,7 @@ export class LearnSession {
         this.cards.forEach(card => {
             this.bindCardFlip(card);
             this.bindRating(card);
+            this.bindFinishSession();
         });
     }
 
@@ -45,6 +46,28 @@ export class LearnSession {
         });
     }
 
+    bindFinishSession(){
+        const finish_btn = document.querySelector('#finish_session');
+        const segments = window.location.pathname.split('/').filter(segment => segment !== '');
+        const sessionId = segments[segments.length - 1];
+
+        if (!finish_btn){
+            console.error('Element #finish_session does not exist!');
+            return;
+        }
+
+        finish_btn.addEventListener('click', (e) => {
+            this.sendFinish_Sesssion(sessionId)
+                .then(() => {
+                    window.location.href = '/account/';
+                })
+                .catch(error => {
+                    console.error('Error during finishing session:', error);
+                    alert('We were not manage to finish the session.')
+                });
+        });
+    }
+
     async sendMasteredLevel(cardId, level) {
         try {
             const response = await fetch('/learning/api/rate-card/', {
@@ -74,6 +97,29 @@ export class LearnSession {
             console.log('Updated card', cardId, 'to level', level);
         } else {
             console.error('Card element not found for ID:', cardId);
+        }
+    }
+
+    async sendFinish_Sesssion(id){
+        try {
+            const response = await fetch('/learning/api/finish_session/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': this.getCSRFToken(),
+                },
+                body: JSON.stringify({
+                    is_finished: true,
+                    finished_at: new Date().toISOString(),
+                    session_id: id
+                })
+            },);
+
+            if (!response.ok) {
+                throw new Error('Failed to save finish session');
+            }
+        } catch (err) {
+            console.error(err);
         }
     }
 

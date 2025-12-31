@@ -18,5 +18,10 @@ urlpatterns = [
         'api/rate-card/',
         views.rate_card,
         name='rate_card',
+    ),
+    path(
+        'api/finish_session/',
+        views.finish_session,
+        name='finish_session',
     )
 ]

@@ -21,7 +21,7 @@ class Learn_session(models.Model):
     started_at = models.DateTimeField(auto_now_add=True)
     finished_at = models.DateTimeField(auto_now_add=True)
 
-    current_card_nr = models.IntegerField(default=1)
+    # current_card_nr = models.IntegerField(default=1)
 
     is_finished = models.BooleanField(default=False)
 

@@ -47,3 +47,27 @@ def rate_card(request):
     card.save(update_fields=['mastered_lvl'])
 
     return JsonResponse({'status': 'ok'})
+
+@require_POST
+def finish_session(request):
+    try:
+        data = json.loads(request.body)
+
+        learning_session = Learn_session.objects.get(
+            id=data['session_id'],
+            user=request.user
+        )
+
+        learning_session.is_finished=True
+        learning_session.finished_at=data['finished_at']
+        learning_session.save(update_fields=['is_finished', 'finished_at'])
+
+        return JsonResponse({
+            'statis': 'ok',
+            'message': 'session finished!'
+        })
+
+    except Learn_session.DoesNotExist:
+        return JsonResponse({'error': 'Sesja nie istnieje'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
