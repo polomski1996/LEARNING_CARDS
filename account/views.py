@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from django.http import HttpResponse
 from .models import Profile
 from sets.models import Set, Card
 from .forms import (
@@ -14,7 +13,7 @@ def dashboard(request):
     
     sets = Set.objects.filter(owner=request.user)
 
-    return render(
+    return render(  
         request,
         'account/dashboard.html',
         {

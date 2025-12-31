@@ -104,7 +104,7 @@ body {
 }
 
 .card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 .card-inner {
@@ -127,8 +127,6 @@ body {
   inset: 0;
   border-radius: var(--card-radius);
   padding: 1px;
-  background: linear-gradient(135deg, var(--session-accent), transparent);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
