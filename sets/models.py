@@ -24,6 +24,7 @@ class Set(models.Model):
     def __str__(self):
         return self.name
     
+#Simple Card with open self rating model
 class Card(models.Model):
     set = models.ForeignKey(
         Set,
@@ -64,3 +65,17 @@ class Card(models.Model):
 
     def __str__(self):
         return self.question[:40]
+    
+#Card with closed question.
+class Card_closed_q(Card):
+    pass
+
+#Closed question card answers.
+class Card_answers(models.Model):
+    parent_card = models.ForeignKey(
+        Card_closed_q,
+        on_delete=models.CASCADE,
+        related_name='card_answers'
+    )
+    text = models.CharField(max_length=255)
+    is_correct = models.BooleanField(default=False)

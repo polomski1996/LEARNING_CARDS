@@ -46,6 +46,8 @@ def create_card(request, set_id):
         }
     )
 
+
+
 @login_required
 def delete_set(request, set_id):
     if request.method == 'POST':
