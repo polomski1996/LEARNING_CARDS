@@ -11,11 +11,8 @@
   <link href="{% static 'learn_sessions/styles/session_style.css' %}" rel="stylesheet">
 </head>
 <body>
-  <div class="finish_session-container">
-    <button id="finish_session" type="button">
-      <p>Finish Session</p>
-    </button>
-  </div>
+
+  <p><input type="submit" id="finish_session" value="Finish Session"></p>
   <div id="cards-container">
     <ul class="cards-grid">
       {% for card in cards %}
