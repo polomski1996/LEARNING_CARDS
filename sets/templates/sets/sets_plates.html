@@ -40,7 +40,7 @@
       {% endfor %}
     </ul>
   </div>
-{% else %}
-  <p class="empty-state">You don't have any sets yet.</p>
-{% endif %}
+  {% else %}
+    <p class="empty-state">You don't have any sets yet.</p>
+  {% endif %}
 {% endblock content %}

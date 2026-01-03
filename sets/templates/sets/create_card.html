@@ -3,6 +3,11 @@
 {% block content %}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        <div class="create_card_closed">
+            <a href="{% url "sets:create_closed" set.id %}" class="menu-link">
+                <span> Create Closed Question</span>
+            </a>
+        </div>
 
         <div class="errors">
             {{ form.non_field_errors }}

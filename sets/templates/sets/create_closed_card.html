@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="create_card_closed">
+            <a href="{% url "sets:create" set.id%}" class="menu-link">
+                <span>Create Simple Card</span>
+            </a>
+        </div>
+
+        <div class="errors">
+            {{ form.non_field_errors }}
+        </div>
+
+        <p>Question</p>
+        <textarea name="question"></textarea>
+        <input type="file" name="question_image" accept="image/*">
+
+        <div class="closed_answers">
+            <p>Answer: A</p>
+            <input type="checkbox" name="ans_a">
+            <p>Answer: B</p>
+            <input type="checkbox" name="ans_b">
+            <p>Answer: C</p>
+            <input type="checkbox" name="ans_c">
+            <p>Answer: D</p>
+            <input type="checkbox" name="ans_d">
+            <p>Answer: E</p>
+            <input type="checkbox" name="ans_e">
+        </div>
+        
+        <p><input type="submit" value="Create Card"></p>
+        
+    </form>
+{% endblock content %}

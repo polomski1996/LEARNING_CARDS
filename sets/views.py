@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import SetForm, CardForm
+from .forms import SetForm, CardForm, Card_closed_q, Card_answers
 from .models import Set
 
 # Create your views here.
@@ -46,7 +46,32 @@ def create_card(request, set_id):
         }
     )
 
+@login_required
+def create_closed_card(request, set_id):
+    set_to_modify = get_object_or_404(
+            Set,
+            id=set_id,
+            owner=request.user
+        )
+    
+    if request.method == 'POST':
+        form_q = Card_closed_q(request.POST, request.FILES)
+        form_ans = Card_answers(request.POST)
+        if form_q.is_valid() and form_ans.is_valid():
+            card_closed = form_q.save(commit=False)
+        # TO IMPEMENT
 
+    else:
+        form = CardForm()
+
+    return render(
+        request,
+        'sets/create_closed_card.html',
+        {
+            'form': form,
+            'set': set_to_modify
+        }
+    )
 
 @login_required
 def delete_set(request, set_id):

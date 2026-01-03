@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from .models import Set, Card
+from .models import Set, Card, Card_closed_q, Card_answers
 
 #Set From
 class SetForm(forms.ModelForm):
@@ -32,3 +32,39 @@ class CardForm(forms.ModelForm):
             )
 
         return cleaned
+
+#Card Form
+class ClosedCardForm(forms.ModelForm):
+    class Meta:
+        model = Card_closed_q
+        fields = ['question', 'question_image']
+
+    def clean(self):
+        cleaned = super().clean()
+
+        if not (
+            cleaned.get('question') or cleaned.get('question_image')
+        ):
+            raise forms.ValidationError(
+                "Question must have text or image"
+            )
+
+        return cleaned
+
+#Answers for ClosedCardForm
+class AnswersClosedCardForm(forms.ModelForm):
+    class Meta:
+        model = Card_answers
+        fields = ['parent_card', 'text', 'is_correct']
+    
+        def clean(self):
+            cleaned = super().clean()
+
+            if not (
+                cleaned.get('text')
+            ):
+                raise forms.ValidationError(
+                    "text is necessary"
+                )
+
+            return cleaned
