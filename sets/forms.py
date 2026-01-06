@@ -55,16 +55,4 @@ class ClosedCardForm(forms.ModelForm):
 class AnswersClosedCardForm(forms.ModelForm):
     class Meta:
         model = Card_answers
-        fields = ['parent_card', 'text', 'is_correct']
-    
-        def clean(self):
-            cleaned = super().clean()
-
-            if not (
-                cleaned.get('text')
-            ):
-                raise forms.ValidationError(
-                    "text is necessary"
-                )
-
-            return cleaned
+        fields = ['letter', 'is_correct']

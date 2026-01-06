@@ -77,5 +77,5 @@ class Card_answers(models.Model):
         on_delete=models.CASCADE,
         related_name='card_answers'
     )
-    text = models.CharField(max_length=255)
+    letter = models.CharField(blank=True, max_length=2)
     is_correct = models.BooleanField(default=False)

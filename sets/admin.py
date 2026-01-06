@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Set, Card
+from .models import Set, Card, Card_closed_q, Card_answers
 
 # Register your models here.
 @admin.register(Set)
@@ -11,3 +11,13 @@ class SetAdmin(admin.ModelAdmin):
 class CardAdmin(admin.ModelAdmin):
     list_display = ['set', 'question', 'answer', 'card_nr', 'mastered_lvl']
     raw_id_fields = ['set']
+
+@admin.register(Card_closed_q)
+class ClosedCardAdmin(admin.ModelAdmin):
+    list_display = ['set', 'question']
+    raw_id_fields = ['set']
+
+@admin.register(Card_answers)
+class CardAnswerAdmin(admin.ModelAdmin):
+    list_display = ['parent_card', 'letter', 'is_correct']
+    raw_id_fields = ['parent_card']
