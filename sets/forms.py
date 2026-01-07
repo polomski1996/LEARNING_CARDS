@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from .models import Set, Card, Card_closed_q, Card_answers
+from django.forms import modelformset_factory
 
 #Set From
 class SetForm(forms.ModelForm):
@@ -56,3 +57,5 @@ class AnswersClosedCardForm(forms.ModelForm):
     class Meta:
         model = Card_answers
         fields = ['letter', 'is_correct']
+        extra=6
+        can_delete=False

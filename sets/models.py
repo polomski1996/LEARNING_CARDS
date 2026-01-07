@@ -31,7 +31,7 @@ class Card(models.Model):
         on_delete=models.CASCADE,
         related_name='cards'
     )
-    question = models.TextField(blank=True)
+    question =  models.TextField(blank=True)
     question_image = models.ImageField(
         upload_to='cards/questions/',
         blank=True,

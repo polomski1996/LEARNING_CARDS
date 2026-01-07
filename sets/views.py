@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import SetForm, CardForm, ClosedCardForm, AnswersClosedCardForm
-from .models import Set
+from .models import Set, Card_answers
 
 # Create your views here.
 
@@ -56,26 +56,31 @@ def create_closed_card(request, set_id):
     
     if request.method == 'POST':
         form_q = ClosedCardForm(request.POST, request.FILES)
-        form_ans = AnswersClosedCardForm(request.POST)
-        if form_q.is_valid() and form_ans.is_valid():
+        if form_q.is_valid():
             closed_question = form_q.save(commit=False)
             closed_question.set = set_to_modify
             closed_question.save()
+            
+            answers_count = int(request.POST.get('answers_count', 0))
 
-            closed_answer = form_ans.save(commit=False)
-            closed_answer.parent_card = closed_question
-            closed_answer.save()
+            for i in range(answers_count):
+                letter = request.POST.get(f'letter_{i}')
+                is_correct = request.POST.get(f'is_correct_{i}') == 'on'
+                
+                Card_answers.objects.create(
+                    parent_card=closed_question,
+                    letter=letter,
+                    is_correct=is_correct
+                )
             return redirect('/account/')
     else:
         form_q = ClosedCardForm()
-        form_ans = AnswersClosedCardForm()
 
     return render(
         request,
         'sets/create_closed_card.html',
         {
             'form_q': form_q,
-            'form_ans': form_ans,
             'set': set_to_modify
         }
     )

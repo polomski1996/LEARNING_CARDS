@@ -18,36 +18,32 @@
         <input type="file" name="question_image" accept="image/*">
 
         <div class="closed_answers">
-            <div class="answer">
-                <p>answer A</p>
-                <textarea name="letter">A</textarea>
-                <input type="checkbox" name="is_correct">
-            </div>
-            <div class="answer">
-                <p>answer B</p>
-                <textarea name="letter">B</textarea>
-                <input type="checkbox" name="is_correct">
-            </div>
-            <div class="answer">
-                <p>answer C</p>
-                <textarea name="letter">C</textarea>
-                <input type="checkbox" name="is_correct">
-            </div>
-            <div class="answer">
-                <p>answer D</p>
-                <textarea name="letter">D</textarea>
-                <input type="checkbox" name="is_correct">
-            </div>
-            <div class="answer">
-                <p>answer E</p>
-                <textarea name="letter">E</textarea>
-                <input type="checkbox" name="is_correct">
-            </div>
-            <div class="answer">
-                <p>answer F</p>
-                <textarea name="letter">F</textarea>
-                <input type="checkbox" name="is_correct">
-            </div>
+            <input type="hidden" name="answers_count" value="6">
+            
+
+            <input type="hidden" name="letter_0" value="A">
+            <input type="checkbox" name="is_correct_0">
+            <p>A</p>
+
+            <input type="hidden" name="letter_1" value="B">
+            <input type="checkbox" name="is_correct_1">
+            <p>B</p>
+
+            <input type="hidden" name="letter_2" value="C">
+            <input type="checkbox" name="is_correct_2">
+            <p>C</p>
+
+            <input type="hidden" name="letter_3" value="D">
+            <input type="checkbox" name="is_correct_3">
+            <p>D</p>
+
+            <input type="hidden" name="letter_4" value="E">
+            <input type="checkbox" name="is_correct_4">
+            <p>E</p>
+
+            <input type="hidden" name="letter_5" value="F">
+            <input type="checkbox" name="is_correct_5">
+            <p>F</p>
         </div>
         
         <p><input type="submit" value="Create Card"></p>
