@@ -59,6 +59,7 @@ def create_closed_card(request, set_id):
         if form_q.is_valid():
             closed_question = form_q.save(commit=False)
             closed_question.set = set_to_modify
+            closed_question.card_type = "closed_card"
             closed_question.save()
             
             answers_count = int(request.POST.get('answers_count', 0))

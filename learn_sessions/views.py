@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Learn_session
-from sets.models import Set, Card
+from sets.models import Set, Card, Card_closed_q
 from django.views.decorators.http import require_POST
 import json
 from django.http import JsonResponse

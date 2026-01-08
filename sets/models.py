@@ -45,8 +45,10 @@ class Card(models.Model):
     )
 
 
+    
     created_at = models.DateTimeField(auto_now_add=True)
     card_nr = models.PositiveIntegerField(default=1, editable=False)
+    card_type = models.TextField(default="open_card")
     mastered_lvl = models.PositiveSmallIntegerField(default=0)
 
     #automatic sort by  card_nr

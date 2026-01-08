@@ -149,6 +149,12 @@ input[type="submit"]:hover,
   border: 1px solid var(--session-border);
 }
 
+/* CLOSED CARD STYLE */
+.card-inner .closed_card {
+  background: pink;
+  color: red;
+}
+
 .card-inner::before {
   content: "";
   position: absolute;
