@@ -16,7 +16,7 @@
   <div id="cards-container">
     <ul class="cards-grid">
       {% for card in cards %}
-        <li class="card" data-card-id="{{ card.id }}">
+        <li class="card" data-card-id="{{ card.id }}" data-card-type= "{{ card.card_type }}">
           <div class="card-inner">
             {% if card.card_type == "closed_card" %}
               <div class="closed_card">
@@ -28,6 +28,14 @@
                     <img src="{{ card.question_image.url }}" alt="Question image here">
                   </div>
                 {% endif %}
+
+                <div class="answers_btns">
+                  {% for i in "ABCDEF" %}
+                    <button class="answer_btn" data-level="{{ i }}">
+                      {{ i }}
+                    </button>
+                  {% endfor %}
+                </div>
               </div>
             {% else %}
               <div class="card-front">

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Learn_session
-from sets.models import Set, Card, Card_closed_q
+from sets.models import Set, Card, Card_closed_q, Card_answers
 from django.views.decorators.http import require_POST
 import json
 from django.http import JsonResponse
@@ -47,6 +47,38 @@ def rate_card(request):
     card.save(update_fields=['mastered_lvl'])
 
     return JsonResponse({'status': 'ok'})
+
+@require_POST
+def judge_card(request):
+    data = json.loads(request.body)
+    answer = data['answer']
+
+    card = Card.objects.get(
+        id=data['card_id'],
+        set__owner=request.user
+    )
+
+    ans_list = Card_answers.objects.filter(parent_card=card.id)
+    
+    for el in ans_list:
+        if el.letter == answer:
+            if el.is_correct == True:
+                return JsonResponse({
+                    "status": "ok",
+                    "result": "correct"
+                })
+            elif el.is_correct == False:
+                return JsonResponse({
+                    "status": "ok",
+                    "result": "incorrect"
+                })
+            else:
+                return JsonResponse({
+                    "status": "error",
+                    "message": "invalid answer"
+                })
+    # FINISH IMPLEMENTATION!
+
 
 @require_POST
 def finish_session(request):

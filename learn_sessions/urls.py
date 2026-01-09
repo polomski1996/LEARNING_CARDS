@@ -23,5 +23,10 @@ urlpatterns = [
         'api/finish_session/',
         views.finish_session,
         name='finish_session',
+    ),
+    path(
+        'api/judge-answer/',
+        views.judge_card,
+        name='judge-answer'
     )
 ]

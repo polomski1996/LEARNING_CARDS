@@ -8,21 +8,18 @@ export class LearnSession {
             this.bindCardFlip(card);
             this.bindRating(card);
             this.bindFinishSession();
+            this.bindJudgeAnswer(card);
         });
-    }
-
-    refresh_rating(card_id) {
-        this.cards.forEach(card => {
-            const level = 
-            document.querySelector('.mastered_lvl').innerHTML = '<p><h2>' + level + '</h2></p>';
-        })
     }
 
     bindCardFlip(card) {
         const inner = card.querySelector('.card-inner');
+        const cardType = card.dataset.cardType;
+
+        if (cardType !== 'open_card') return;
 
         inner.addEventListener('click', (e) => {
-            // nie obracaj jeśli kliknięto przycisk
+            
             if (e.target.closest('.rate-btn')) return;
 
             inner.classList.toggle('flipped');
@@ -43,28 +40,6 @@ export class LearnSession {
 
                 btn.classList.add('active');
             });
-        });
-    }
-
-    bindFinishSession(){
-        const finish_btn = document.querySelector('#finish_session');
-        const segments = window.location.pathname.split('/').filter(segment => segment !== '');
-        const sessionId = segments[segments.length - 1];
-
-        if (!finish_btn){
-            console.error('Element #finish_session does not exist!');
-            return;
-        }
-
-        finish_btn.addEventListener('click', (e) => {
-            this.sendFinish_Sesssion(sessionId)
-                .then(() => {
-                    window.location.href = '/account/';
-                })
-                .catch(error => {
-                    console.error('Error during finishing session:', error);
-                    alert('We were not manage to finish the session.')
-                });
         });
     }
 
@@ -98,6 +73,90 @@ export class LearnSession {
         } else {
             console.error('Card element not found for ID:', cardId);
         }
+    }
+    async sendClosedAnswer(cardId, answer){
+        const cardElement = document.querySelector(`.card[data-card-id="${cardId}"] .card-inner`);
+        try {
+            const response = await fetch('/learning/api/judge-answer/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': this.getCSRFToken(),
+                },
+                body: JSON.stringify({
+                    card_id: cardId,
+                    answer: answer
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to bring answer')
+            }
+
+            // ADD COLORS HIGHLIGHT
+            const data = await response.json();
+            if (data.result === "correct") {
+                cardElement.classList.add('correct');
+                setTimeout(() => {
+                    cardElement.classList.remove('correct');
+                }, 400);
+
+                // console.log("PORAWNA");
+            }
+            else if (data.result === "incorrect") {
+                cardElement.classList.add('incorrect');
+                setTimeout(() => {
+                    cardElement.classList.remove('incorrect');
+                }, 400);
+                // console.log("ŻŁE ZŁE ZŁĘ");
+            }
+            console.log(cardElement)
+
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    bindJudgeAnswer(card) {
+        const cardType = card.dataset.cardType;
+        const ansBtns = card.querySelectorAll('.answer_btn');
+        const cardId = card.dataset.cardId;
+        
+        if (cardType !== 'closed_card') return;
+
+        ansBtns.forEach(button => {
+            button.addEventListener('click', async (e) => {
+                e.stopPropagation();
+
+                const answer = button.dataset.level;
+                await this.sendClosedAnswer(cardId, answer);
+            })
+            
+        });
+
+
+    }
+
+    bindFinishSession(){
+        const finish_btn = document.querySelector('#finish_session');
+        const segments = window.location.pathname.split('/').filter(segment => segment !== '');
+        const sessionId = segments[segments.length - 1];
+
+        if (!finish_btn){
+            console.error('Element #finish_session does not exist!');
+            return;
+        }
+
+        finish_btn.addEventListener('click', (e) => {
+            this.sendFinish_Sesssion(sessionId)
+                .then(() => {
+                    window.location.href = '/account/';
+                })
+                .catch(error => {
+                    console.error('Error during finishing session:', error);
+                    alert('We were not manage to finish the session.')
+                });
+        });
     }
 
     async sendFinish_Sesssion(id){
