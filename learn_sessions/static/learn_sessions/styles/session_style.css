@@ -208,12 +208,12 @@ input[type="submit"]:hover,
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.card .card-inner .correct {
-  background-color: green;
+.card-inner.correct{
+  background: green;
   transition: background-color 0.2s;
 }
-.card .card-inner .incorrect {
-  background-color: red;
+.card-inner.incorrect{
+  background: red;
   transition: background-color 0.2s;
 }
 

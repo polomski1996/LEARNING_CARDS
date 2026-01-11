@@ -100,17 +100,13 @@ export class LearnSession {
                 setTimeout(() => {
                     cardElement.classList.remove('correct');
                 }, 400);
-
-                // console.log("PORAWNA");
             }
             else if (data.result === "incorrect") {
                 cardElement.classList.add('incorrect');
                 setTimeout(() => {
                     cardElement.classList.remove('incorrect');
                 }, 400);
-                // console.log("ŻŁE ZŁE ZŁĘ");
             }
-            console.log(cardElement)
 
         } catch (err) {
             console.error(err);
