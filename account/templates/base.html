@@ -27,7 +27,7 @@
                 <span>Dashboard</span>
               </a>
             </li>
-            <li class="menu-item {% if section == "account" %}selected{% endif %}">
+            <li class="menu-item">
               <button class="menu-link dropdown-trigger" data-dropdown="accountDropdown" type="button">
                 <span class="menu-icon">👤</span>
                 <span>Account</span>
@@ -48,6 +48,12 @@
               <a href="{% url 'sets:set_create' %}" class="menu-link btn-primary">
                 <span class="menu-icon">➕</span>
                 <span>Create Set</span>
+              </a>
+            </li>
+            <li class="menu-item">
+              {% comment %} <a href="{% url 'results' %}" class="menu-link btn-primary"> {% endcomment %}
+                <span class="menu-icon">📊</span>
+                <span>See Results</span>
               </a>
             </li>
           </ul>
