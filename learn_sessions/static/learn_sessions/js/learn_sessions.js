@@ -44,6 +44,8 @@ export class LearnSession {
     }
 
     async sendMasteredLevel(cardId, level) {
+        const segments = window.location.pathname.split('/').filter(segment => segment !== '');
+        const sessionId = segments[segments.length - 1];
         try {
             const response = await fetch('/learning/api/rate-card/', {
                 method: 'POST',
@@ -53,7 +55,8 @@ export class LearnSession {
                 },
                 body: JSON.stringify({
                     card_id: cardId,
-                    mastered_level: level
+                    mastered_level: level,
+                    session_id: sessionId
                 })
             });
 
@@ -69,13 +72,17 @@ export class LearnSession {
         
         if (cardElement) {
             cardElement.querySelector('.mastered_lvl').innerHTML = `<h2>${level}</h2>`;
-            console.log('Updated card', cardId, 'to level', level);
+            // console.log('Updated card', cardId, 'to level', level, 'session_ID:  ', sessionId);
         } else {
             console.error('Card element not found for ID:', cardId);
         }
     }
+
+
     async sendClosedAnswer(cardId, answer){
         const cardElement = document.querySelector(`.card[data-card-id="${cardId}"] .card-inner`);
+        const segments = window.location.pathname.split('/').filter(segment => segment !== '');
+        const sessionId = segments[segments.length - 1];
         try {
             const response = await fetch('/learning/api/judge-answer/', {
                 method: 'POST',
@@ -85,7 +92,8 @@ export class LearnSession {
                 },
                 body: JSON.stringify({
                     card_id: cardId,
-                    answer: answer
+                    answer: answer,
+                    session_id: sessionId
                 })
             });
 

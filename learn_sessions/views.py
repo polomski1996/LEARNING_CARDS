@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Learn_session
-from sets.models import Set, Card, Card_closed_q, Card_answers
+from .models import Learn_session, Log_answer
+from sets.models import Set, Card, Card_answers
 from django.views.decorators.http import require_POST
 import json
 from django.http import JsonResponse
@@ -34,6 +34,7 @@ def learn_session_view(request, session_id):
         'cards': cards,
     })
 
+#view that handles click on rate btn for open card
 @require_POST
 def rate_card(request):
     data = json.loads(request.body)
@@ -46,8 +47,17 @@ def rate_card(request):
     card.mastered_lvl = data['mastered_level']
     card.save(update_fields=['mastered_lvl'])
 
+    #log answer in Log_answers model
+    session = Learn_session.objects.get(
+        id=data['session_id'],
+        set__owner=request.user
+    )
+    log = Log_answer.objects.create(session=session, type_of_card='open_card', logged_question=card.question,
+                     logged_answer=str(card.mastered_lvl))
+
     return JsonResponse({'status': 'ok'})
 
+#View that handles click on closed card answer
 @require_POST
 def judge_card(request):
     data = json.loads(request.body)
@@ -59,6 +69,14 @@ def judge_card(request):
     )
 
     ans_list = Card_answers.objects.filter(parent_card=card.id)
+
+    #log answer in Log_answers model
+    session = Learn_session.objects.get(
+        id=data['session_id'],
+        set__owner=request.user
+    )
+    log = Log_answer.objects.create(session=session, type_of_card='open_card', logged_question=card.question,
+                     logged_answer=str(answer))
     
     for el in ans_list:
         if el.letter == answer:

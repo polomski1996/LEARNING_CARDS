@@ -28,4 +28,18 @@ class Learn_session(models.Model):
     def __str__(self):
         return f'Session {self.id} | {self.user} | {self.set.name}'
     
-    
+# Answers logging
+class Log_answer(models.Model):
+    session=models.ForeignKey(
+        Learn_session,
+        on_delete=models.CASCADE,
+        related_name='session_log'
+    )
+
+    time_of_answer = models.DateTimeField(auto_now_add=True, editable=False)
+    type_of_card = models.CharField(max_length=15)
+    logged_question = models.CharField(max_length=80)
+    logged_answer = models.CharField(max_length=1)
+
+    def __str__(self):
+        return f'Log_answer {self.id} | {self.session} | {self.session.set}'
