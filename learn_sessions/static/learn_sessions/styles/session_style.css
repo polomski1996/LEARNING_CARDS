@@ -379,6 +379,10 @@ input[type="submit"]:hover,
   transform: scale(1.02);
 }
 
+.card_question {
+  white-space: pre-line;
+}
+
 /* Rating section - larger touch targets, positioned at bottom */
 .rating {
   display: flex;
