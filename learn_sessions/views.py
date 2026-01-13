@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from .models import Learn_session, Log_answer
 from sets.models import Set, Card, Card_answers
 from django.views.decorators.http import require_POST
@@ -121,3 +122,17 @@ def finish_session(request):
         return JsonResponse({'error': 'Sesja nie istnieje'}, status=404)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
+    
+@login_required
+def results(request):
+    learn_sessions = Learn_session.objects.order_by('-started_at')
+    session_log = Log_answer.objects.all()
+
+    return render(  
+        request,
+        'account/results.html',
+        {
+            'learn_sessions': learn_sessions,
+            'session_log': session_log
+        }
+    )

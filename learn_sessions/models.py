@@ -21,6 +21,11 @@ class Learn_session(models.Model):
     started_at = models.DateTimeField(auto_now_add=True)
     finished_at = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def duration(self):
+        if not self.finished_at: return None
+        return self.finished_at - self.started_at
+
     # current_card_nr = models.IntegerField(default=1)
 
     is_finished = models.BooleanField(default=False)

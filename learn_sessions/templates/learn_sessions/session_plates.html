@@ -1,0 +1,44 @@
+{% load static %}
+<head>
+  <link href="{% static "styles/session_plates_styles.css" %}" rel="stylesheet">
+</head>
+
+{% if learn_sessions %}
+  <div id="sessions-container">
+    {% for session in learn_sessions %}
+      <div class="session">
+        <div class="session-details">
+          <p>set: {{session.set}}</p>
+          <p>duration: {{session.duration}}</p>
+          <p>started at: {{session.started_at}}</p>
+        </div>
+        <div class="session-content">
+          {% if session_log %}
+            <table class="log-table">
+              <thead>
+                <tr>
+                  <th>Question</th>
+                  <th>Answer</th>
+                  <th>Time of answer</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for log in session_log %}
+                  {% if log.session.id == session.id%}
+                    <tr>
+                    <td>{{ log.logged_question }}</td>
+                    <td>{{ log.logged_answer }}</td>
+                    <td>{{ log.time_of_answer }}</td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="empty-state">You don't have any done sessions yet.</p>
+{% endif %}
