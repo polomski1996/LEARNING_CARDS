@@ -9,5 +9,5 @@ class Learn_sesssionAdmin(admin.ModelAdmin):
 
 @admin.register(Log_answer)
 class Log_answerAdmin(admin.ModelAdmin):
-    list_display = ['session', 'time_of_answer', 'type_of_card', 'logged_question', 'logged_answer']
+    list_display = ['session', 'time_of_answer', 'type_of_card', 'logged_question', 'logged_answer', 'is_correct', 'is_better']
     raw_id_fields = ['session']

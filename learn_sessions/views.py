@@ -44,9 +44,16 @@ def rate_card(request):
         id=data['card_id'],
         set__owner=request.user
     )
-
+    old_mastered_lvl = card.mastered_lvl
     card.mastered_lvl = data['mastered_level']
     card.save(update_fields=['mastered_lvl'])
+
+    #checking progress of mastered_lvl
+    if int(card.mastered_lvl) > old_mastered_lvl:
+        progress = 'BETTER'
+    elif int(card.mastered_lvl) < old_mastered_lvl:
+        progress = 'WORSE'
+    else: progress = 'STILL'
 
     #log answer in Log_answers model
     session = Learn_session.objects.get(
@@ -54,7 +61,8 @@ def rate_card(request):
         set__owner=request.user
     )
     log = Log_answer.objects.create(session=session, type_of_card='open_card', logged_question=card.question,
-                     logged_answer=str(card.mastered_lvl))
+                                    logged_answer=str(card.mastered_lvl), is_better=progress)
+    log.save()
 
     return JsonResponse({'status': 'ok'})
 
@@ -77,16 +85,20 @@ def judge_card(request):
         set__owner=request.user
     )
     log = Log_answer.objects.create(session=session, type_of_card='open_card', logged_question=card.question,
-                     logged_answer=str(answer))
+                    logged_answer=str(answer))
     
     for el in ans_list:
         if el.letter == answer:
             if el.is_correct == True:
+                log.is_correct = True
+                log.save()
                 return JsonResponse({
                     "status": "ok",
                     "result": "correct"
                 })
             elif el.is_correct == False:
+                log.is_correct = False
+                log.save()
                 return JsonResponse({
                     "status": "ok",
                     "result": "incorrect"
@@ -126,7 +138,7 @@ def finish_session(request):
 @login_required
 def results(request):
     learn_sessions = Learn_session.objects.order_by('-started_at')
-    session_log = Log_answer.objects.all()
+    session_log = Log_answer.objects.order_by('-time_of_answer')
 
     return render(  
         request,

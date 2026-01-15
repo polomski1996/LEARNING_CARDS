@@ -1,9 +1,10 @@
 {% load static %}
 <head>
-  <link href="{% static "styles/session_plates_styles.css" %}" rel="stylesheet">
+  <link href="{% static 'learn_sessions/styles/session_plates_styles.css' %}" rel="stylesheet">
 </head>
 
-{% if learn_sessions %}
+<body>
+  {% if learn_sessions %}
   <div id="sessions-container">
     {% for session in learn_sessions %}
       <div class="session">
@@ -19,6 +20,7 @@
                 <tr>
                   <th>Question</th>
                   <th>Answer</th>
+                  <th>Correct/Progress</th>
                   <th>Time of answer</th>
                 </tr>
               </thead>
@@ -28,6 +30,11 @@
                     <tr>
                     <td>{{ log.logged_question }}</td>
                     <td>{{ log.logged_answer }}</td>
+                      {% if log.is_correct != None %}
+                        <td>{{log.is_correct}}</td>
+                      {% elif log.is_better %}
+                        <td>{{ log.is_better }}</td>
+                      {% endif %}
                     <td>{{ log.time_of_answer }}</td>
                     </tr>
                   {% endif %}
@@ -42,3 +49,8 @@
 {% else %}
   <p class="empty-state">You don't have any done sessions yet.</p>
 {% endif %}
+
+<script type="module" src="{% static 'learn_sessions/session_main.js' %}"></script>
+</body>
+
+

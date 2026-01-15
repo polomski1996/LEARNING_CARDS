@@ -45,6 +45,8 @@ class Log_answer(models.Model):
     type_of_card = models.CharField(max_length=15)
     logged_question = models.CharField(max_length=80)
     logged_answer = models.CharField(max_length=1)
+    is_correct = models.BooleanField(null=True, blank=True)
+    is_better = models.CharField(max_length=30, null=True, blank=True)
 
     def __str__(self):
         return f'Log_answer {self.id} | {self.session} | {self.session.set}'

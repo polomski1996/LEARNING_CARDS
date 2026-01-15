@@ -1,0 +1,245 @@
+/* Sessions container */
+#sessions-container {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Single session card */
+.session {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.session:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Session header details */
+.session-details {
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.session-details p {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.session-details p::first-letter {
+  text-transform: uppercase;
+}
+
+/* Session content area */
+.session-content {
+  padding: 1.5rem;
+}
+
+/* Table styling */
+.log-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.log-table thead {
+  background: #f8f9fa;
+}
+
+.log-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #2c3e50;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.log-table td {
+  padding: 1rem;
+  color: #666;
+  border-bottom: 1px solid #eee;
+}
+
+.log-table tbody tr {
+  transition: background-color 0.2s;
+}
+
+.log-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.log-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Added background color classes for correct/incorrect and progress states */
+.log-table tbody tr.bg-correct {
+  background-color: #d4edda !important;
+}
+
+.log-table tbody tr.bg-incorrect {
+  background-color: #f8d7da !important;
+}
+
+.log-table tbody tr.bg-better {
+  background-color: #d4edda !important;
+}
+
+.log-table tbody tr.bg-worse {
+  background-color: #f8d7da !important;
+}
+
+.log-table tbody tr.bg-correct:hover,
+.log-table tbody tr.bg-better:hover {
+  background-color: #c3e6cb !important;
+}
+
+.log-table tbody tr.bg-incorrect:hover,
+.log-table tbody tr.bg-worse:hover {
+  background-color: #f5c6cb !important;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #7f8c8d;
+  font-style: italic;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+}
+
+/* Tablet responsiveness */
+@media (max-width: 1024px) {
+  .session-details {
+    gap: 1.5rem;
+  }
+
+  .log-table {
+    font-size: 0.9rem;
+  }
+
+  .log-table th,
+  .log-table td {
+    padding: 0.75rem;
+  }
+}
+
+/* Mobile responsiveness - Convert table to cards */
+@media (max-width: 768px) {
+  .session-details {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .session-content {
+    padding: 1rem;
+  }
+
+  /* Hide table headers */
+  .log-table thead {
+    display: none;
+  }
+
+  /* Make table rows behave like cards */
+  .log-table,
+  .log-table tbody,
+  .log-table tr,
+  .log-table td {
+    display: block;
+  }
+
+  .log-table tr {
+    margin-bottom: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+  }
+
+  /* Updated mobile card backgrounds for colored states */
+  .log-table tr.bg-correct,
+  .log-table tr.bg-better {
+    background: #d4edda !important;
+  }
+
+  .log-table tr.bg-incorrect,
+  .log-table tr.bg-worse {
+    background: #f8d7da !important;
+  }
+
+  .log-table td {
+    padding: 0.5rem 0;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  /* Add labels before content on mobile */
+  .log-table td:nth-child(1)::before {
+    content: "Question: ";
+    font-weight: 600;
+    color: #2c3e50;
+    margin-right: 0.5rem;
+  }
+
+  .log-table td:nth-child(2)::before {
+    content: "Answer: ";
+    font-weight: 600;
+    color: #2c3e50;
+    margin-right: 0.5rem;
+  }
+
+  .log-table td:nth-child(3)::before {
+    content: "Result: ";
+    font-weight: 600;
+    color: #2c3e50;
+    margin-right: 0.5rem;
+  }
+
+  .log-table td:nth-child(4)::before {
+    content: "Time: ";
+    font-weight: 600;
+    color: #2c3e50;
+    margin-right: 0.5rem;
+  }
+
+  .log-table td {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  #sessions-container {
+    margin: 1rem 0;
+    gap: 1rem;
+  }
+
+  .session-details {
+    padding: 1rem;
+  }
+
+  .session-content {
+    padding: 0.75rem;
+  }
+
+  .log-table tr {
+    padding: 0.75rem;
+  }
+}

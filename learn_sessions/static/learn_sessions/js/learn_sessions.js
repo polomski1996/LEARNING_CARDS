@@ -10,6 +10,7 @@ export class LearnSession {
             this.bindFinishSession();
             this.bindJudgeAnswer(card);
         });
+        this.colourTableResultsRows();
     }
 
     bindCardFlip(card) {
@@ -185,6 +186,38 @@ export class LearnSession {
             console.error(err);
         }
     }
+
+    // Apply row background colors based on is_correct and is_better values
+    colourTableResultsRows(){
+
+        const tableRows = document.querySelectorAll(".log-table tbody tr");
+
+        tableRows.forEach((row) => {
+            // Get the third cell which contains Correct/Progress information
+            const resultCell = row.cells[2]
+
+            if (resultCell) {
+            const resultText = resultCell.textContent.trim()
+
+            // Check for is_correct values (True/False)
+            if (resultText === "True") {
+                row.classList.add("bg-correct")
+            } else if (resultText === "False") {
+                row.classList.add("bg-incorrect")
+            }
+            // Check for is_better values (BETTER/WORSE/STILL)
+            else if (resultText === "BETTER") {
+                row.classList.add("bg-better")
+            } else if (resultText === "WORSE") {
+                row.classList.add("bg-worse")
+            }
+            // STILL - no class added, keeps default background
+            }
+        })
+        console.log('hej, funcja colourTableResultsRows działa')
+    }
+
+
 
     getCSRFToken() {
         return document.querySelector('[name=csrfmiddlewaretoken]').value;
