@@ -11,9 +11,24 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import environ
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+#.env read
+env = environ.Env()
+env_file = os.path.join(BASE_DIR, '.env')
+
+if os.path.exists(env_file):
+    print(f"✅ Znaleziono plik .env w: {env_file}")
+    environ.Env.read_env(env_file)
+    print(env('DB_USER'))
+else:
+    print(f"❌ NIE ZNALEZIONO pliku .env w: {env_file}")
+    # To zatrzyma serwer i powie Ci, gdzie program szuka pliku
+    raise FileNotFoundError(f"Plik .env nie istnieje w {env_file}")
 
 
 # Quick-start development settings - unsuitable for production
@@ -90,8 +105,12 @@ WSGI_APPLICATION = 'learning_cards.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': env('DB_ENGINE'),
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
